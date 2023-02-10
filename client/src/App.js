@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Single from "./pages/Single";
 import Write from "./pages/Write";
+import "./style.scss";
 
 const App = () => {
   const Layout = () => {
@@ -32,7 +33,7 @@ const App = () => {
           element: <Write />,
         },
         {
-          path: "single/:id",
+          path: "post/:id",
           element: <Single />,
         },
       ],
@@ -50,7 +51,9 @@ const App = () => {
 
   return (
     <div className="app">
-      <RouterProvider router={router} />
+      <div className="container">
+        <RouterProvider router={router} />
+      </div>
     </div>
   );
 };
