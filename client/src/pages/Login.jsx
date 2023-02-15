@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { AuthContext } from "../context/authContext";
+import { UserContext } from "../allContexts/userContext";
 
 const Login = () => {
-  const { login, error } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { login } = useContext(UserContext);
+
+  const [error, setError] = useState(null);
 
   const [user, setUser] = useState({
     username: "",
@@ -13,10 +16,19 @@ const Login = () => {
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const handleClick = (e) => {
+
+  const handleClick = async (e) => {
     e.preventDefault();
-    login(user);
+
+    try {
+      await login(user);
+      navigate("/");
+    } catch (err) {
+      console.log(err.response.data);
+      setError(err.response.data);
+    }
   };
+
   return (
     <div className="auth">
       <h1>Login</h1>
