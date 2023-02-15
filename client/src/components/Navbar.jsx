@@ -1,7 +1,18 @@
 import logo from "../img/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../allContexts/userContext";
 
 const Navbar = () => {
+  const { currentUser, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleClick = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="navbar">
       <div className="container">
@@ -31,8 +42,15 @@ const Navbar = () => {
           <Link className="link" to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
-          <span>Ayomide</span>
-          <span>Logout</span>
+          <span>{currentUser?.fName}</span>
+          {currentUser ? (
+            <span onClick={handleClick}>Logout</span>
+          ) : (
+            <Link className="link" to="/login">
+              <span>Login</span>
+            </Link>
+          )}
+
           <span className="write">
             <Link to="/write" className="link">
               Write

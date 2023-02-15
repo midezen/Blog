@@ -1,12 +1,9 @@
 import axios from "axios";
 import { createContext, useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 
 export const UserContext = createContext();
-// const navigate = useNavigate();
 
 export const UserContextProvider = ({ children }) => {
-  //   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
@@ -14,7 +11,11 @@ export const UserContextProvider = ({ children }) => {
   const login = async (user) => {
     const res = await axios.post("/auth/login", user);
     setCurrentUser(res.data);
-    //   navigate("/");
+  };
+
+  const logout = async (user) => {
+    await axios.post("/auth/logout");
+    setCurrentUser(null);
   };
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export const UserContextProvider = ({ children }) => {
   }, [currentUser]);
 
   return (
-    <UserContext.Provider value={{ login, currentUser }}>
+    <UserContext.Provider value={{ login, currentUser, logout }}>
       {children}
     </UserContext.Provider>
   );
