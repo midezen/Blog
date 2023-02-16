@@ -23,6 +23,10 @@ const Home = () => {
     fetchData();
   }, [location.search]);
 
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
   return (
     <div className="home">
       <div className="posts">
@@ -34,7 +38,8 @@ const Home = () => {
                 <Link className="link" to={`/post/${post.id}`}>
                   <h1>{post.title}</h1>{" "}
                 </Link>
-                <p>{post.desc}</p>
+
+                <p>{truncate(post.desc, 330)}</p>
                 <Link className="link" to={`/post/${post.id}`}>
                   <button>Read More</button>
                 </Link>
