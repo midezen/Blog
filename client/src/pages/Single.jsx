@@ -1,6 +1,6 @@
 import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -12,9 +12,9 @@ const Single = () => {
 
   const [post, setPost] = useState([]);
 
-  const id = useLocation().pathname.split("/")[2];
+  const navigate = useNavigate();
 
-  console.log(id);
+  const id = useLocation().pathname.split("/")[2];
 
   const fetchData = async () => {
     try {
@@ -27,7 +27,16 @@ const Single = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`/posts/${id}`);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="single">
@@ -39,16 +48,16 @@ const Single = () => {
               <div className="user">
                 <img src={postItem.img} alt="" />
                 <div className="info">
-                  <span>{postItem.fName}</span>
+                  <span>{postItem.username}</span>
                   <p>Posted {moment(postItem.date).fromNow()}</p>
                 </div>
-                {currentUser.fName === postItem.fName && (
+                {currentUser.username === postItem.username && (
                   <div className="edit">
-                    <Link to={`/write?edit=5`}>
+                    <Link to={`/write?edit=${id}`} state={postItem}>
                       <img src={Edit} alt="" />
                     </Link>
 
-                    <img src={Delete} alt="" />
+                    <img src={Delete} alt="" onClick={handleDelete} />
                   </div>
                 )}
               </div>

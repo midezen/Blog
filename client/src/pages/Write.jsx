@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useLocation } from "react-router-dom";
 
 const Write = () => {
   const [value, setValue] = useState("");
+  const [file, setFile] = useState("");
+  const [cat, setCat] = useState("");
+  const [title, setTitle] = useState("");
+
+  const state = useLocation().state;
+  console.log(state);
+
   return (
     <div className="add">
       <div className="content">
-        <input type="text" placeholder="Title" />
+        <input type="text" placeholder="Title" onChange={() => setValue()} />
         <div className="editorContainer">
           <ReactQuill
             className="editor"

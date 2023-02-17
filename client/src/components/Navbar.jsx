@@ -9,6 +9,7 @@ const Navbar = () => {
   const handleClick = async () => {
     try {
       await logout();
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
