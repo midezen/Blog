@@ -31,25 +31,19 @@ const Home = () => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   };
 
-  // const handleClick = (param) => {
-  //   if (currentUser === null) {
-  //     navigate("/");
-  //   } else {
-  //     navigate(`/post/${param}`);
-  //   }
-  // };
   return (
     <div className="home">
       <div className="posts">
         {posts.map((post) => {
           return (
             <div className="post" key={post.id}>
-              <div className="img">{/* <img src={dposts.img} alt="" /> */}</div>
+              <div className="img">
+                <img src="" alt="" />
+              </div>
               <div className="content">
                 <Link
                   className="link"
                   to={currentUser === null ? `/login` : `/post/${post.id}`}
-                  // onClick={handleClick(post.id)}
                 >
                   <h1>{post.title}</h1>{" "}
                 </Link>
@@ -58,7 +52,6 @@ const Home = () => {
                 <Link
                   className="link"
                   to={currentUser === null ? `/login` : `/post/${post.id}`}
-                  // onClick={handleClick(post.id)}
                 >
                   <button>Read More</button>
                 </Link>

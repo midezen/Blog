@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Single from "./pages/Single";
 import Write from "./pages/Write";
@@ -35,6 +36,10 @@ const App = () => {
         {
           path: "post/:id",
           element: <Single />,
+        },
+        {
+          path: "profile/:id",
+          element: <Profile />,
         },
       ],
     },

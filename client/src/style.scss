@@ -1,4 +1,4 @@
-$lightGreen: #b9e7e7;
+$lightGreen: rgb(9, 228, 228);
 
 .app {
   display: flex;
@@ -94,13 +94,34 @@ $lightGreen: #b9e7e7;
           align-items: center;
 
           h6 {
+            color: whitesmoke;
+            padding: 8px 10px;
+            border: 1px solid $lightGreen;
+            background-color: $lightGreen;
             font-size: 16px;
-            font-weight: 300;
-          }
-
-          span {
-            cursor: pointer;
             font-weight: 700;
+            border-radius: 10px;
+
+            &:hover {
+              background-color: white;
+              color: $lightGreen;
+            }
+          }
+          .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+            span {
+              cursor: pointer;
+              font-weight: 700;
+            }
           }
 
           .write {
@@ -113,6 +134,9 @@ $lightGreen: #b9e7e7;
             align-items: center;
             font-weight: 300;
             border: 1px solid white;
+            color: white;
+            letter-spacing: 1.5px;
+            text-align: center;
 
             &:hover {
               color: teal;
@@ -408,6 +432,108 @@ $lightGreen: #b9e7e7;
             align-items: center;
             gap: 2px;
             color: teal;
+          }
+        }
+      }
+    }
+    //PROFILE
+    .profile {
+      display: flex;
+      gap: 20px;
+
+      .left {
+        flex: 1;
+        .userInfo {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          img {
+            height: 280px;
+            width: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            align-self: center;
+          }
+
+          h3 {
+            color: darkgray;
+          }
+
+          button {
+            border: none;
+            background-color: $lightGreen;
+            padding: 7px 10px;
+            color: whitesmoke;
+            font-weight: 700;
+            border-radius: 10px;
+          }
+
+          .follow {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 15px;
+
+            span {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+            }
+          }
+
+          .bottom {
+            display: flex;
+            flex-direction: column;
+
+            span {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              font-size: 15px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      .right {
+        flex: 9;
+
+        .posts {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 30px;
+
+          .post {
+            height: 280px;
+            width: 200px;
+            border: 1px solid $lightGreen;
+            border-radius: 10px;
+
+            .postContainer {
+              padding: 8px 10px;
+              display: flex;
+              flex-direction: column;
+              gap: 15px;
+
+              img {
+                height: 150px;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 10px;
+              }
+              p {
+                text-align: justify;
+              }
+              button {
+                border: none;
+                background-color: $lightGreen;
+                padding: 7px 10px;
+                color: whitesmoke;
+                font-weight: 700;
+                border-radius: 10px;
+              }
+            }
           }
         }
       }

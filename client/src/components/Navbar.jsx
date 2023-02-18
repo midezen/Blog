@@ -43,9 +43,24 @@ const Navbar = () => {
           <Link className="link" to="/?cat=food">
             <h6>FOOD</h6>
           </Link>
-          <span>{currentUser?.fName}</span>
+          {currentUser === null ? (
+            ""
+          ) : (
+            <Link to={`/profile/${currentUser.id}`} className="link">
+              <div className="user">
+                <img
+                  src="https://images.unsplash.com/photo-1670272499188-79fe22656f64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
+                  alt=""
+                />
+                <span>{currentUser?.fName}</span>
+              </div>
+            </Link>
+          )}
+
           {currentUser ? (
-            <span onClick={handleClick}>Logout</span>
+            <span onClick={handleClick} style={{ cursor: "pointer" }}>
+              Logout
+            </span>
           ) : (
             <Link className="link" to="/login">
               <span>Login</span>
