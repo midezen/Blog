@@ -531,8 +531,9 @@ $lightGreen: rgb(9, 228, 228);
                 object-fit: cover;
                 border-radius: 10px;
               }
-              p {
-                text-align: justify;
+              h5 {
+                text-align: center;
+                height: 50px;
               }
               button {
                 border: none;
@@ -541,6 +542,8 @@ $lightGreen: rgb(9, 228, 228);
                 color: whitesmoke;
                 font-weight: 700;
                 border-radius: 10px;
+                width: 100%;
+                cursor: pointer;
               }
             }
           }
