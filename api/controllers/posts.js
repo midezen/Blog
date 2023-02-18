@@ -5,17 +5,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const getPosts = (req, res) => {
-  // const cat = req.query.cat;
-
-  // const q = cat ? "SELECT * FROM posts WHERE cat = ?" : "SELECT * FROM posts";
-  const q = req.query
-    ? "SELECT * FROM posts WHERE cat = ? OR uid = ?"
-    : "SELECT * FROM posts";
-
-  // db.query(q, [cat], (err, data) => {
-  //   if (err) return err;
-  //   res.status(200).json(data);
-  // });
+  const q =
+    req.query.cat || req.query.id
+      ? "SELECT * FROM posts WHERE cat = ? OR uid = ?"
+      : "SELECT * FROM posts";
 
   db.query(q, [req.query.cat, req.query.id], (err, data) => {
     if (err) return res.status(500).json(err);

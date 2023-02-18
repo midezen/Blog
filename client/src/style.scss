@@ -107,6 +107,15 @@ $lightGreen: rgb(9, 228, 228);
               color: $lightGreen;
             }
           }
+          .active {
+            color: $lightGreen;
+            padding: 8px 10px;
+            background-color: white;
+            border: 1px solid $lightGreen;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 10px;
+          }
           .user {
             display: flex;
             align-items: center;

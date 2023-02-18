@@ -1,10 +1,13 @@
 import logo from "../img/logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(UserContext);
+
+  const location = useLocation().search.split("=")[1];
+
   const navigate = useNavigate();
   const handleClick = async () => {
     try {
@@ -14,6 +17,7 @@ const Navbar = () => {
       console.log(err);
     }
   };
+
   return (
     <div className="navbar">
       <div className="container">
@@ -26,22 +30,24 @@ const Navbar = () => {
 
         <div className="links">
           <Link className="link" to="/?cat=art">
-            <h6>ART</h6>
+            <h6 className={location === "art" && "active"}>ART</h6>
           </Link>
           <Link className="link" to="/?cat=science">
-            <h6>SCIENCE</h6>
+            <h6 className={location === "science" && "active"}>SCIENCE</h6>
           </Link>
           <Link className="link" to="/?cat=technology">
-            <h6>TECHNOLOGY</h6>
+            <h6 className={location === "technology" && "active"}>
+              TECHNOLOGY
+            </h6>
           </Link>
           <Link className="link" to="/?cat=cinema">
-            <h6>CINEMA</h6>
+            <h6 className={location === "cinema" && "active"}>CINEMA</h6>
           </Link>
           <Link className="link" to="/?cat=design">
-            <h6>DESIGN</h6>
+            <h6 className={location === "design" && "active"}>DESIGN</h6>
           </Link>
           <Link className="link" to="/?cat=food">
-            <h6>FOOD</h6>
+            <h6 className={location === "food" && "active"}>FOOD</h6>
           </Link>
           {currentUser === null ? (
             ""
