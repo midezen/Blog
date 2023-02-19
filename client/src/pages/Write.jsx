@@ -27,7 +27,7 @@ const Write = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    upload();
+
     const imgUrl = await upload();
     try {
       const res = state
@@ -100,6 +100,7 @@ const Write = () => {
               value="art"
               id="art"
               checked={cat === "art"}
+              onChange={(e) => setCat(e.target.value)}
             />
             <label htmlFor="art">ART</label>
           </div>

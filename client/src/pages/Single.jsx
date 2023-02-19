@@ -44,9 +44,16 @@ const Single = () => {
         return (
           <>
             <div className="content">
-              <img src={postItem.postImg} alt="" />
+              <img
+                src={process.env.PUBLIC_URL + `/upload/${postItem.postImg}`}
+                alt=""
+              />
+
               <div className="user">
-                <img src={postItem.img} alt="" />
+                <img
+                  src={process.env.PUBLIC_URL + `/upload/${postItem.img}`}
+                  alt=""
+                />
                 <div className="info">
                   <span>{postItem.username}</span>
                   <p>Posted {moment(postItem.date).fromNow()}</p>

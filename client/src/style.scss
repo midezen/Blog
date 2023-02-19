@@ -511,11 +511,11 @@ $lightGreen: rgb(9, 228, 228);
         .posts {
           display: flex;
           flex-wrap: wrap;
-          gap: 30px;
+          gap: 25px;
 
           .post {
             height: 280px;
-            width: 200px;
+            width: 210px;
             border: 1px solid $lightGreen;
             border-radius: 10px;
 
