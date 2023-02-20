@@ -456,50 +456,105 @@ $lightGreen: rgb(9, 228, 228);
           display: flex;
           flex-direction: column;
           gap: 20px;
-          img {
-            height: 280px;
-            width: 280px;
-            border-radius: 50%;
-            object-fit: cover;
-            align-self: center;
-          }
 
-          h3 {
-            color: darkgray;
-          }
+          .userImage {
+            img {
+              height: 280px;
+              width: 280px;
+              border-radius: 50%;
+              object-fit: cover;
+              align-self: center;
+              position: relative;
+              border: 1px solid $lightGreen;
+            }
 
-          button {
-            border: none;
-            background-color: $lightGreen;
-            padding: 7px 10px;
-            color: whitesmoke;
-            font-weight: 700;
-            border-radius: 10px;
-          }
+            .cameraIconContainer {
+              position: absolute;
+              right: 1030px;
+              top: 290px;
+              background-color: whitesmoke;
+              padding: 8px;
+              border: 1px solid white;
+              border-radius: 50%;
+              cursor: pointer;
 
-          .follow {
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-            font-size: 15px;
-
-            span {
-              display: flex;
-              align-items: center;
-              gap: 10px;
+              .cameraIcon {
+                font-size: 40px;
+                color: purple;
+              }
             }
           }
 
-          .bottom {
+          .userText {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            h3 {
+              color: darkgray;
+            }
+
+            button {
+              border: none;
+              background-color: $lightGreen;
+              padding: 7px 10px;
+              color: whitesmoke;
+              font-weight: 700;
+              border-radius: 10px;
+              cursor: pointer;
+            }
+
+            .bottom {
+              display: flex;
+              flex-direction: column;
+
+              span {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 15px;
+                font-weight: 500;
+              }
+            }
+          }
+          .update {
             display: flex;
             flex-direction: column;
 
-            span {
+            input {
+              padding: 10px 8px;
+              margin-bottom: 10px;
+            }
+
+            textArea {
+              padding: 10px 8px;
+              margin-bottom: 10px;
+            }
+
+            .buttons {
               display: flex;
-              align-items: center;
-              gap: 10px;
-              font-size: 15px;
-              font-weight: 500;
+              gap: 15px;
+
+              :first-child {
+                width: 100px;
+                border: none;
+                background-color: $lightGreen;
+                padding: 7px 10px;
+                color: whitesmoke;
+                font-weight: 700;
+                border-radius: 10px;
+                cursor: pointer;
+              }
+
+              :last-child {
+                width: 100px;
+                padding: 7px 10px;
+                font-weight: 700;
+                border-radius: 10px;
+                cursor: pointer;
+                background-color: white;
+                border: 1px solid $lightGreen;
+                color: $lightGreen;
+              }
             }
           }
         }

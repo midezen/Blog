@@ -2,20 +2,29 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
+import avatar from "../img/avatar.jpg";
 
 const Profile = () => {
   const { currentUser } = useContext(UserContext);
+  const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
-
-  const truncate = (str, n) => {
-    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
-  };
+  const [file, setFile] = useState(null);
+  const [edit, setEdit] = useState(
+    JSON.parse(localStorage.getItem("edit")) || false
+  );
+  const [updatedUser, setUpdatedUser] = useState({
+    firstName: currentUser.fName,
+    lastName: currentUser.lName,
+    username: currentUser.username,
+    userLocation: currentUser.location,
+    email: currentUser.email,
+    about: currentUser.about,
+  });
 
   const id = useParams().id;
-  console.log(id);
 
   const fetchData = async () => {
     try {
@@ -25,45 +34,182 @@ const Profile = () => {
       console.log(err);
     }
   };
+  const fetchUserData = async () => {
+    try {
+      const res = await axios.get(`/users/?id=${id}`);
+      console.log(res.data);
+      setUser(res.data);
+      // console.log(user);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     fetchData();
   }, [id]);
 
+  useEffect(() => {
+    fetchUserData();
+  }, [id]);
+
+  const handleChange = (e) => {
+    setUpdatedUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleToggle = () => {
+    setEdit(!edit);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("edit", edit);
+  }, [edit]);
+
+  const upload = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("profilePic", file);
+      const res = await axios.post("/profileUpload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const imgUrl = await upload();
+
+      await axios.put(`/users/${currentUser.id}`, {
+        fName: updatedUser.firstName,
+        lName: updatedUser.lastName,
+        username: updatedUser.username,
+        location: updatedUser.userLocation,
+        email: updatedUser.email,
+        img: file ? imgUrl : user.img,
+      });
+
+      setEdit(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="profile">
       <div className="left">
         <div className="userInfo">
-          <img
-            src="https://images.unsplash.com/photo-1670272499188-79fe22656f64?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-            alt=""
-          />
-          <h2>
-            {currentUser.fName} <span>{currentUser.lName}</span>
-          </h2>
-          <h3>{currentUser.username}</h3>
-          <p>This is who I am</p>
-          <button>Edit profile</button>
-          <p className="follow">
-            <span>
-              <PeopleOutlineOutlinedIcon /> 500 followers
-            </span>{" "}
-            · 20 following
-          </p>
-          <div className="bottom">
-            <div className="item">
-              <span>
-                <LocationOnOutlinedIcon /> Nigeria
-              </span>
+          {user.map((userr) => {
+            return (
+              <div className="userImage">
+                <img
+                  src={
+                    userr.img === null
+                      ? avatar
+                      : process.env.PUBLIC_URL + `/profilePic/${userr.img}`
+                  }
+                  alt=""
+                />
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  id="upload"
+                  onChange={(e) => setFile(e.target.files[0])}
+                />
+                <label htmlFor="upload">
+                  <div className="cameraIconContainer">
+                    <CameraAltRoundedIcon className="cameraIcon" />
+                  </div>
+                </label>
+              </div>
+            );
+          })}
+
+          {edit !== true &&
+            user.map((userr) => {
+              return (
+                <div className="userText">
+                  <h2>
+                    {userr.fName} <span>{userr.lName}</span>
+                  </h2>
+                  <h3>{userr.username}</h3>
+                  {userr.about === null ? "" : <p>{userr.about}</p>}
+                  {currentUser.id === 16 ? (
+                    <button onClick={handleToggle}>Edit profile</button>
+                  ) : (
+                    <button>Follow</button>
+                  )}
+
+                  <div className="bottom">
+                    <div className="item">
+                      {userr.location === null ? (
+                        ""
+                      ) : (
+                        <span>
+                          <LocationOnOutlinedIcon /> {userr.location}
+                        </span>
+                      )}
+                    </div>
+                    <div className="item">
+                      {userr.email === null ? (
+                        ""
+                      ) : (
+                        <span>
+                          <EmailOutlinedIcon /> {userr.email}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+          {edit === true && (
+            <div className="update">
+              <input
+                type="text"
+                name="firstName"
+                value={updatedUser.firstName}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="lastName"
+                value={updatedUser.lastName}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="username"
+                value={updatedUser.username}
+                onChange={handleChange}
+              />
+              <textarea
+                value={updatedUser.about}
+                name="about"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                value={updatedUser.userLocation}
+                name="userLocation"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                value={updatedUser.email}
+                onChange={handleChange}
+              />
+              <div className="buttons">
+                <button onClick={handleUpdate}>save</button>
+                <button onClick={() => setEdit(false)}>cancel</button>
+              </div>
             </div>
-            <div className="item">
-              <span>
-                <EmailOutlinedIcon /> {currentUser.email}
-              </span>
-            </div>
-          </div>
+          )}
         </div>
       </div>
+
       <div className="right">
         <div className="posts">
           {posts.map((post) => {

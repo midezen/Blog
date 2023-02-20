@@ -5,6 +5,7 @@ import postRoute from "./routes/posts.js";
 import cookieParser from "cookie-parser";
 import Cors from "cors";
 import multer from "multer";
+import userRoute from "./routes/users.js";
 
 dotenv.config;
 
@@ -23,14 +24,35 @@ const storage = multer.diskStorage({
   },
 });
 
+const uploadStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "../client/public/profilePic");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
 const upload = multer({ storage: storage });
+
+const profilePicUpload = multer({ storage: uploadStorage });
 
 app.post("/api/upload", upload.single("file"), function (req, res) {
   const file = req.file;
   res.status(200).json(file.filename);
 });
 
+app.post(
+  "/api/profileUpload",
+  profilePicUpload.single("profilePic"),
+  function (req, res) {
+    const file = req.file;
+    res.status(200).json(file.filename);
+  }
+);
+
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 
 app.listen(8800, () => {

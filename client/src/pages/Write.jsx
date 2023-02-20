@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 
@@ -11,6 +11,7 @@ const Write = () => {
   const [file, setFile] = useState("");
   const [cat, setCat] = useState(state ? state.cat : "");
   const [title, setTitle] = useState(state ? state.title : "");
+  const navigate = useNavigate();
 
   console.log(state);
 
@@ -44,6 +45,7 @@ const Write = () => {
             cat,
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
           });
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

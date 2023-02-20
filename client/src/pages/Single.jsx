@@ -45,7 +45,7 @@ const Single = () => {
           <>
             <div className="content">
               <img
-                src={process.env.PUBLIC_URL + `/upload/${postItem.postImg}`}
+                src={process.env.PUBLIC_URL + `/upload/${postItem?.postImg}`}
                 alt=""
               />
 

@@ -74,7 +74,10 @@ const Navbar = () => {
           )}
 
           <span className="write">
-            <Link to="/write" className="link">
+            <Link
+              to={currentUser === null ? "/login" : "/write"}
+              className="link"
+            >
               Write
             </Link>
           </span>

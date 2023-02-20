@@ -30,8 +30,6 @@ const Home = () => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   };
 
-  // const thisImage = require(`../../public/upload/${posts.postImg}`);
-
   return (
     <div className="home">
       <div className="posts">
@@ -40,15 +38,9 @@ const Home = () => {
             <div className="post" key={post.id}>
               <div className="img">
                 <img
-                  src={process.env.PUBLIC_URL + `/upload/${post.postImg}`}
+                  src={process.env.PUBLIC_URL + `/upload/${post?.postImg}`}
                   alt="This image"
                 />
-                {/* <img src="../upload/1676734368905design 1.jpg" alt="" /> */}
-
-                {/* <img
-                  src="https://media.istockphoto.com/id/1443625668/photo/mature-woman-preparing-healthy-vegetables-salad.jpg?b=1&s=170667a&w=0&k=20&c=O1bRMiCtK0VSFPGI0BTAsp4AcO0RFIIrMrILAv4htWs="
-                  alt=""
-                /> */}
               </div>
               <div className="content">
                 <Link
