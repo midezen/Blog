@@ -44,16 +44,21 @@ const Single = () => {
         return (
           <>
             <div className="content">
-              <img
-                src={process.env.PUBLIC_URL + `/upload/${postItem?.postImg}`}
-                alt=""
-              />
-
-              <div className="user">
+              {postItem.postImg ? (
                 <img
-                  src={process.env.PUBLIC_URL + `/upload/${postItem.img}`}
+                  src={process.env.PUBLIC_URL + `/upload/${postItem.postImg}`}
                   alt=""
                 />
+              ) : (
+                ""
+              )}
+              <div className="user">
+                <Link to={`/profile/${postItem.uid}`}>
+                  <img
+                    src={process.env.PUBLIC_URL + `/profilePic/${postItem.img}`}
+                    alt=""
+                  />
+                </Link>
                 <div className="info">
                   <span>{postItem.username}</span>
                   <p>Posted {moment(postItem.date).fromNow()}</p>

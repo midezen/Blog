@@ -37,9 +37,8 @@ const Profile = () => {
   const fetchUserData = async () => {
     try {
       const res = await axios.get(`/users/?id=${id}`);
-      console.log(res.data);
       setUser(res.data);
-      // console.log(user);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -65,32 +64,37 @@ const Profile = () => {
     localStorage.setItem("edit", edit);
   }, [edit]);
 
-  const upload = async () => {
-    try {
+  const upload = async (e) => {
+    if (file === null) {
+      alert("Please choose a file");
+    } else {
       const formData = new FormData();
       formData.append("profilePic", file);
-      const res = await axios.post("/profileUpload", formData);
-      return res.data;
-    } catch (err) {
-      console.log(err);
+      try {
+        const res = await axios.post("/profileUpload", formData);
+        e.preventDefault();
+        await axios.put(`/users/img/${id}`, { img: res.data });
+        fetchUserData();
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    // const imgUrl = await upload();
     try {
-      const imgUrl = await upload();
-
-      await axios.put(`/users/${currentUser.id}`, {
+      await axios.put(`/users/${id}`, {
         fName: updatedUser.firstName,
         lName: updatedUser.lastName,
         username: updatedUser.username,
         location: updatedUser.userLocation,
         email: updatedUser.email,
-        img: file ? imgUrl : user.img,
+        about: updatedUser.about,
       });
-
       setEdit(false);
+      fetchUserData();
     } catch (err) {
       console.log(err);
     }
@@ -117,11 +121,18 @@ const Profile = () => {
                   id="upload"
                   onChange={(e) => setFile(e.target.files[0])}
                 />
-                <label htmlFor="upload">
-                  <div className="cameraIconContainer">
-                    <CameraAltRoundedIcon className="cameraIcon" />
+                {currentUser.id.toString() === id && (
+                  <div className="handleUpload">
+                    <label htmlFor="upload">
+                      <div className="cameraIconContainer">
+                        <CameraAltRoundedIcon className="cameraIcon" />
+                      </div>
+                    </label>
+                    <button className="thisButton" onClick={upload}>
+                      Update Profile Picture
+                    </button>
                   </div>
-                </label>
+                )}
               </div>
             );
           })}
@@ -135,12 +146,9 @@ const Profile = () => {
                   </h2>
                   <h3>{userr.username}</h3>
                   {userr.about === null ? "" : <p>{userr.about}</p>}
-                  {currentUser.id === 16 ? (
+                  {currentUser.id.toString() === id && (
                     <button onClick={handleToggle}>Edit profile</button>
-                  ) : (
-                    <button>Follow</button>
                   )}
-
                   <div className="bottom">
                     <div className="item">
                       {userr.location === null ? (
@@ -200,6 +208,7 @@ const Profile = () => {
                 type="text"
                 value={updatedUser.email}
                 onChange={handleChange}
+                name="email"
               />
               <div className="buttons">
                 <button onClick={handleUpdate}>save</button>

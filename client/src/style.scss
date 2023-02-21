@@ -464,23 +464,36 @@ $lightGreen: rgb(9, 228, 228);
               border-radius: 50%;
               object-fit: cover;
               align-self: center;
-              position: relative;
               border: 1px solid $lightGreen;
             }
 
-            .cameraIconContainer {
-              position: absolute;
-              right: 1030px;
-              top: 290px;
-              background-color: whitesmoke;
-              padding: 8px;
-              border: 1px solid white;
-              border-radius: 50%;
-              cursor: pointer;
+            .handleUpload {
+              display: flex;
+              gap: 20px;
+              align-items: center;
+              .cameraIconContainer {
+                background-color: whitesmoke;
+                padding: 8px;
+                border: 1px solid white;
+                border-radius: 50%;
+                cursor: pointer;
+                width: fit-content;
 
-              .cameraIcon {
-                font-size: 40px;
-                color: purple;
+                .cameraIcon {
+                  font-size: 40px;
+                  color: purple;
+                }
+              }
+
+              .thisButton {
+                width: 200px;
+                border: none;
+                background-color: $lightGreen;
+                padding: 10px 8px;
+                color: whitesmoke;
+                font-weight: 700;
+                border-radius: 10px;
+                cursor: pointer;
               }
             }
           }

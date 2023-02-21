@@ -39,7 +39,7 @@ const Home = () => {
               <div className="img">
                 <img
                   src={process.env.PUBLIC_URL + `/upload/${post?.postImg}`}
-                  alt="This image"
+                  alt=""
                 />
               </div>
               <div className="content">

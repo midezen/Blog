@@ -35,7 +35,7 @@ const Write = () => {
         ? await axios.put(`/posts/${state.id}`, {
             title,
             desc: value,
-            postImg: file ? imgUrl : "",
+            postImg: file ? imgUrl : state.postImg,
             cat,
           })
         : await axios.post("/posts/create", {

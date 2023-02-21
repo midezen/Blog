@@ -22,10 +22,14 @@ const Menu = ({ cat }) => {
       {posts.map((post) => {
         return (
           <div className="post" key={post.id}>
-            <img
-              src={process.env.PUBLIC_URL + `/upload/${post?.postImg}`}
-              alt=""
-            />
+            {post.postImg ? (
+              <img
+                src={process.env.PUBLIC_URL + `/upload/${post.postImg}`}
+                alt=""
+              />
+            ) : (
+              ""
+            )}
             <h2>{post.title}</h2>
             <Link className="link" to={`/post/${post.id}`}>
               <button>Read More</button>
