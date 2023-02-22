@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../allContexts/userContext";
+import DOMPurify from "dompurify";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -37,10 +38,14 @@ const Home = () => {
           return (
             <div className="post" key={post.id}>
               <div className="img">
-                <img
-                  src={process.env.PUBLIC_URL + `/upload/${post?.postImg}`}
-                  alt=""
-                />
+                {post.postImg === null ? (
+                  ""
+                ) : (
+                  <img
+                    src={process.env.PUBLIC_URL + `/upload/${post.postImg}`}
+                    alt=""
+                  />
+                )}
               </div>
               <div className="content">
                 <Link
@@ -50,7 +55,11 @@ const Home = () => {
                   <h1>{post.title}</h1>{" "}
                 </Link>
 
-                <p>{truncate(post.desc, 330)}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(truncate(post.desc, 330)),
+                  }}
+                />
                 <Link
                   className="link"
                   to={currentUser === null ? "/login" : `/post/${post.id}`}

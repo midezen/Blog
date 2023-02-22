@@ -13,7 +13,9 @@ const Write = () => {
   const [title, setTitle] = useState(state ? state.title : "");
   const navigate = useNavigate();
 
-  console.log(state);
+  const handleEditorChange = (content) => {
+    setValue(content);
+  };
 
   const upload = async () => {
     try {
@@ -45,7 +47,7 @@ const Write = () => {
             cat,
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
           });
-      navigate("/");
+      state ? navigate(`/post/${state.id}`) : navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +67,7 @@ const Write = () => {
             className="editor"
             theme="snow"
             value={value}
-            onChange={setValue}
+            onChange={handleEditorChange}
           />
         </div>
       </div>

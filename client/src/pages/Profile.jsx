@@ -8,7 +8,7 @@ import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
 import avatar from "../img/avatar.jpg";
 
 const Profile = () => {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, userData } = useContext(UserContext);
   const [user, setUser] = useState([]);
   const [posts, setPosts] = useState([]);
   const [file, setFile] = useState(null);
@@ -35,13 +35,7 @@ const Profile = () => {
     }
   };
   const fetchUserData = async () => {
-    try {
-      const res = await axios.get(`/users/?id=${id}`);
-      setUser(res.data);
-      return res.data;
-    } catch (err) {
-      console.log(err);
-    }
+    setUser(await userData(id));
   };
 
   useEffect(() => {

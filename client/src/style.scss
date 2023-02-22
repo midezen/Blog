@@ -197,6 +197,7 @@ $lightGreen: rgb(9, 228, 228);
         .post {
           display: flex;
           gap: 100px;
+          align-items: center;
 
           &:nth-child(2n + 1) {
             display: flex;

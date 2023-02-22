@@ -6,6 +6,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { UserContext } from "../allContexts/userContext";
+import DOMPurify from "dompurify";
 
 const Single = () => {
   const { currentUser } = useContext(UserContext);
@@ -74,7 +75,11 @@ const Single = () => {
                 )}
               </div>
               <h1>{postItem.title}</h1>
-              <p>{postItem.desc}</p>
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(postItem.desc),
+                }}
+              />
             </div>
             <Menu cat={postItem.cat} />
           </>
