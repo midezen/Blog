@@ -315,6 +315,17 @@ $lightGreen: rgb(9, 228, 228);
           text-align: justify;
           line-height: 30px;
         }
+        .likeComment {
+          display: flex;
+          align-items: center;
+          gap: 150px;
+
+          .item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+        }
       }
 
       .menu {
@@ -615,6 +626,73 @@ $lightGreen: rgb(9, 228, 228);
                 cursor: pointer;
               }
             }
+          }
+        }
+      }
+    }
+    // Comments
+    .comments {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .createComment {
+        display: flex;
+
+        gap: 15px;
+
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: cover;
+          border-radius: 50%;
+        }
+
+        .input {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          flex: 1;
+          margin-top: 6px;
+
+          input {
+            flex: 1;
+            padding: 8px 5px;
+            outline: none;
+            border: 1px solid $lightGreen;
+          }
+          span {
+            font-size: 11px;
+          }
+        }
+      }
+      .allComments {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .aComment {
+          display: flex;
+          align-items: center;
+
+          img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+            flex: 1;
+          }
+          .desc {
+            flex: 7;
+
+            span {
+              color: black;
+              font-weight: bold;
+            }
+          }
+          span {
+            flex: 3;
+            color: gray;
           }
         }
       }

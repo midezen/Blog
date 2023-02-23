@@ -7,6 +7,9 @@ import { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { UserContext } from "../allContexts/userContext";
 import DOMPurify from "dompurify";
+import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
+import Comments from "../components/Comments";
 
 const Single = () => {
   const { currentUser } = useContext(UserContext);
@@ -80,6 +83,17 @@ const Single = () => {
                   __html: DOMPurify.sanitize(postItem.desc),
                 }}
               />
+              <div className="likeComment">
+                <div className="item">
+                  <ThumbUpAltOutlinedIcon />
+                  <span>291 Likes</span>
+                </div>
+                <div className="item">
+                  <MessageOutlinedIcon />
+                  <span>20 Comments</span>
+                </div>
+              </div>
+              <Comments item={postItem} />
             </div>
             <Menu cat={postItem.cat} />
           </>
