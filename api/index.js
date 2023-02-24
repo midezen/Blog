@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import Cors from "cors";
 import multer from "multer";
 import userRoute from "./routes/users.js";
+import commentRoute from "./routes/comments.js";
 
 dotenv.config;
 
@@ -54,6 +55,7 @@ app.post(
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
+app.use("/api/comments", commentRoute);
 
 app.listen(8800, () => {
   console.log("server is running");
