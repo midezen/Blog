@@ -720,11 +720,12 @@ $lightGreen: rgb(9, 228, 228);
             }
 
             img {
-              width: 30px;
-              height: 30px;
+              width: 20px;
+              height: 20px;
               object-fit: contain;
               border-radius: 50%;
               flex: 0.5;
+              cursor: pointer;
             }
           }
         }

@@ -3,6 +3,7 @@ import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import editIcon from "../img/edit.png";
 import DeleteIcon from "../img/delete.png";
@@ -14,6 +15,7 @@ const Comments = ({ item }) => {
   const [commentsLength, setCommentsLength] = useState("");
   const [commentId, setCommentId] = useState(null);
   const [commentBool, setCommentBool] = useState(false);
+  const [likeBool, setLikeBool] = useState(false);
 
   const getComments = async () => {
     try {
@@ -51,11 +53,27 @@ const Comments = ({ item }) => {
     getComments();
   };
 
+  const deleteComment = async () => {
+    try {
+      await axios.delete(`/comments/${commentId}`);
+    } catch (err) {
+      console.log(err);
+    }
+    getComments();
+  };
+
+  const handleLike = async () => {};
+  const handleLikeDelete = async () => {};
+
   return (
     <div className="comments">
       <div className="likeComment">
         <div className="item">
-          <ThumbUpAltOutlinedIcon />
+          {likeBool ? (
+            <ThumbUpAltIcon onClick={handleLike} />
+          ) : (
+            <ThumbUpAltOutlinedIcon onClick={handleLikeDelete} />
+          )}
           <span>291 Likes</span>
         </div>
         <div className="item">
@@ -113,7 +131,14 @@ const Comments = ({ item }) => {
                         setCommentBool(true);
                       }}
                     />
-                    <img src={DeleteIcon} alt="" />
+                    <img
+                      src={DeleteIcon}
+                      alt=""
+                      onClick={() => {
+                        setCommentId(comment.commentId);
+                        deleteComment();
+                      }}
+                    />
                   </>
                 )}
               </div>
