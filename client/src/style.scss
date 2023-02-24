@@ -3,6 +3,7 @@ $lightGreen: rgb(9, 228, 228);
 .app {
   display: flex;
   justify-content: center;
+
   .container {
     width: 1024px;
 
@@ -683,6 +684,8 @@ $lightGreen: rgb(9, 228, 228);
 
           .img {
             flex: 1;
+            display: flex;
+            gap: 10px;
 
             img {
               width: 40px;
@@ -690,18 +693,39 @@ $lightGreen: rgb(9, 228, 228);
               object-fit: cover;
               border-radius: 50%;
             }
-          }
-          .desc {
-            flex: 7;
+            .desc {
+              display: flex;
+              flex-direction: column;
+              flex: 1;
 
-            span {
-              color: black;
-              font-weight: bold;
+              span {
+                color: black;
+                font-weight: bold;
+              }
+              p {
+                display: flex;
+              }
             }
           }
-          span {
-            flex: 3;
-            color: gray;
+
+          .edge {
+            flex: 0.5;
+            gap: 10px;
+            display: flex;
+            align-items: center;
+
+            span {
+              color: gray;
+              flex: 1;
+            }
+
+            img {
+              width: 30px;
+              height: 30px;
+              object-fit: contain;
+              border-radius: 50%;
+              flex: 0.5;
+            }
           }
         }
       }

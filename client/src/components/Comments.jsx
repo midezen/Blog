@@ -4,14 +4,17 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
+import editIcon from "../img/edit.png";
+import DeleteIcon from "../img/delete.png";
 
 const Comments = ({ item }) => {
   const { currentUser } = useContext(UserContext);
-  const [commentInput, setCommentInput] = useState("");
+  const [commentInput, setCommentInput] = useState(null);
   const [comments, setComments] = useState([]);
   const [commentsLength, setCommentsLength] = useState("");
+  const [commentId, setCommentId] = useState(null);
+  const [commentBool, setCommentBool] = useState(false);
 
-  console.log(commentInput);
   const getComments = async () => {
     try {
       const res = await axios.get(`/comments/?_id=${item.id}`);
@@ -29,17 +32,22 @@ const Comments = ({ item }) => {
   const postComment = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/comments/create", {
-        desc: commentInput,
-        uid: currentUser.id,
-        postid: item.id,
-        date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-      });
+      !commentBool
+        ? await axios.post("/comments/create", {
+            desc: commentInput ? commentInput : null,
+            uid: currentUser.id,
+            postid: item.id,
+            date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+          })
+        : await axios.put(`/comments/${commentId}`, {
+            desc: commentInput ? commentInput : null,
+          });
       console.log("it works");
     } catch (err) {
       console.log(err);
     }
     setCommentInput("");
+    setCommentBool(false);
     getComments();
   };
 
@@ -78,19 +86,37 @@ const Comments = ({ item }) => {
       <div className="allComments">
         {comments.map((comment) => {
           return (
-            <div className="aComment" key={comment.id}>
+            <div className="aComment" key={comment.commentId}>
               <div className="img">
                 <img
                   src={process.env.PUBLIC_URL + `/profilePic/${comment.img}`}
                   alt=""
                 />
+                <div className="desc">
+                  <span>{comment.username}</span>
+                  <p>{comment.desc}</p>
+                </div>
               </div>
 
-              <div className="desc">
-                <span>{comment.username}</span>
-                <p>{comment.desc}</p>
+              <div className="edge">
+                <span>{moment(comment.date).fromNow()}</span>
+                {currentUser.username !== comment.username ? (
+                  ""
+                ) : (
+                  <>
+                    <img
+                      src={editIcon}
+                      alt=""
+                      onClick={() => {
+                        setCommentInput(comment.desc);
+                        setCommentId(comment.commentId);
+                        setCommentBool(true);
+                      }}
+                    />
+                    <img src={DeleteIcon} alt="" />
+                  </>
+                )}
               </div>
-              <span>{moment(comment.date).fromNow()}</span>
             </div>
           );
         })}
