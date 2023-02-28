@@ -7,8 +7,9 @@ import Cors from "cors";
 import multer from "multer";
 import userRoute from "./routes/users.js";
 import commentRoute from "./routes/comments.js";
+import likeRoute from "./routes/likes.js";
 
-dotenv.config;
+dotenv.config();
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/likes", likeRoute);
 
 app.listen(8800, () => {
   console.log("server is running");

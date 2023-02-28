@@ -12,16 +12,15 @@ const Comments = ({ item }) => {
   const { currentUser } = useContext(UserContext);
   const [commentInput, setCommentInput] = useState(null);
   const [comments, setComments] = useState([]);
-  const [commentsLength, setCommentsLength] = useState("");
   const [commentId, setCommentId] = useState(null);
   const [commentBool, setCommentBool] = useState(false);
   const [likeBool, setLikeBool] = useState(false);
+  const [likes, setLikes] = useState([]);
 
   const getComments = async () => {
     try {
       const res = await axios.get(`/comments/?_id=${item.id}`);
       setComments(res.data);
-      setCommentsLength(res.data.length);
     } catch (err) {
       console.log(err);
     }
@@ -44,7 +43,6 @@ const Comments = ({ item }) => {
         : await axios.put(`/comments/${commentId}`, {
             desc: commentInput ? commentInput : null,
           });
-      console.log("it works");
     } catch (err) {
       console.log(err);
     }
@@ -53,32 +51,129 @@ const Comments = ({ item }) => {
     getComments();
   };
 
-  const deleteComment = async () => {
+  const deleteComment = async (prop) => {
     try {
-      await axios.delete(`/comments/${commentId}`);
+      await axios.delete(`/comments/${prop}`);
     } catch (err) {
       console.log(err);
     }
     getComments();
   };
 
-  const handleLike = async () => {};
-  const handleLikeDelete = async () => {};
+  const getLikes = async () => {
+    try {
+      const res = await axios.get(`/likes/?id=${item.id}`);
+      setLikes(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+
+    likes.length === 0 && setLikeBool(false);
+  };
+
+  useEffect(() => {
+    getLikes();
+  }, [item.id]);
+
+  useEffect(() => {
+    likes.find((obj) => {
+      obj.uid === currentUser.id && setLikeBool(true);
+    });
+    likes.length === 0 && setLikeBool(false);
+  }, [likes]);
+
+  useEffect(() => {
+    getLikes();
+  }, []);
+
+  useEffect(() => {
+    likes.find((obj) => {
+      obj.uid === currentUser.id && setLikeBool(true);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   getLikes().then(() => {
+  //     likes.find((obj) => {
+  //       if (obj.uid === currentUser.id) {
+  //         setLikeBool(true);
+  //       }
+  //     });
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   // setLikeBool(false);
+  //   getLikes();
+  //   likes.find((obj) => {
+  //     setLikeBool(false);
+  //     obj.uid === currentUser.id && setLikeBool(true);
+  //   });
+  // }, []);
+
+  const handleLike = async () => {
+    const check = likes.find((obj) => obj.uid === currentUser.id);
+    if (check) {
+      // alert("You already Liked this post");
+      setLikeBool(true);
+    } else {
+      try {
+        await axios.post("/likes/create", {
+          postid: item.id,
+          uid: currentUser.id,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getLikes();
+    setLikeBool(true);
+  };
+
+  const handleLikeDelete = async () => {
+    const thisObj = likes.find((obj) => obj.uid === currentUser.id);
+    if (thisObj) {
+      const thisId = thisObj.id;
+      try {
+        await axios.delete(`/likes/${thisId}`);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getLikes();
+    setLikeBool(false);
+  };
 
   return (
     <div className="comments">
       <div className="likeComment">
         <div className="item">
-          {likeBool ? (
-            <ThumbUpAltIcon onClick={handleLike} />
+          {!likeBool ? (
+            <div className="items">
+              <ThumbUpAltOutlinedIcon
+                style={{ cursor: "pointer" }}
+                onClick={handleLike}
+              />
+            </div>
           ) : (
-            <ThumbUpAltOutlinedIcon onClick={handleLikeDelete} />
+            <ThumbUpAltIcon
+              style={{ cursor: "pointer" }}
+              onClick={handleLikeDelete}
+            />
           )}
-          <span>291 Likes</span>
+
+          <span>
+            {likes.length} {likes.length === 1 ? "Like" : "Likes"}
+          </span>
         </div>
+
         <div className="item">
           <MessageOutlinedIcon />
-          <span>{commentsLength} Comments</span>
+          <span>
+            {comments.length} {comments.length === 1 ? "Comment" : "Comments"}
+          </span>
         </div>
       </div>
       <div className="createComment">
@@ -134,10 +229,7 @@ const Comments = ({ item }) => {
                     <img
                       src={DeleteIcon}
                       alt=""
-                      onClick={() => {
-                        setCommentId(comment.commentId);
-                        deleteComment();
-                      }}
+                      onClick={() => deleteComment(comment.commentId)}
                     />
                   </>
                 )}
