@@ -1,11 +1,27 @@
+@import "./responsiveness.scss";
 $lightGreen: rgb(9, 228, 228);
 
 .app {
   display: flex;
   justify-content: center;
+  @include mobile {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  @include smallScreen {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
 
   .container {
     width: 1024px;
+    @include mobile {
+      width: 100%;
+    }
+
+    @include smallScreen {
+      width: 100%;
+    }
 
     //ALL LINKS
     .link {
@@ -35,6 +51,10 @@ $lightGreen: rgb(9, 228, 228);
         background-color: white;
         width: 200px;
         gap: 20px;
+
+        @include mobile {
+          padding: 30px;
+        }
 
         input {
           padding: 10px;
@@ -71,21 +91,59 @@ $lightGreen: rgb(9, 228, 228);
         justify-content: space-between;
         align-items: center;
 
-        .logo {
+        .thisDiv {
           display: flex;
           align-items: center;
-          width: 120px;
+          justify-content: center;
 
-          img {
-            width: 70px;
-            height: 70px;
+          .span {
+            color: $lightGreen;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            display: none;
+
+            @include smallScreen {
+              display: none;
+            }
+            @include mobile {
+              display: block;
+            }
           }
 
-          span {
-            font-size: 24px;
-            font-weight: 500;
-            margin-left: -15px;
-            font-family: cursive;
+          .logo {
+            display: flex;
+            align-items: center;
+            width: 120px;
+
+            @include mobile {
+              width: 60px;
+            }
+
+            img {
+              width: 70px;
+              height: 70px;
+
+              @include mobile {
+                width: 40px;
+                height: 40px;
+              }
+            }
+
+            span {
+              font-size: 24px;
+              font-weight: 500;
+              margin-left: -15px;
+              font-family: cursive;
+
+              @include smallScreen {
+                font-size: 20px;
+              }
+              @include mobile {
+                font-size: 18px;
+                margin-left: -8px;
+              }
+            }
           }
         }
 
@@ -94,28 +152,46 @@ $lightGreen: rgb(9, 228, 228);
           gap: 10px;
           align-items: center;
 
-          h6 {
-            color: whitesmoke;
-            padding: 8px 10px;
-            border: 1px solid $lightGreen;
-            background-color: $lightGreen;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 10px;
+          .left {
+            display: flex;
+            gap: 10px;
+            align-items: center;
 
-            &:hover {
-              background-color: white;
-              color: $lightGreen;
+            @include smallScreen {
+              gap: 7px;
             }
-          }
-          .active {
-            color: $lightGreen;
-            padding: 8px 10px;
-            background-color: white;
-            border: 1px solid $lightGreen;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 10px;
+            @include mobile {
+              display: none;
+            }
+
+            h6 {
+              color: whitesmoke;
+              padding: 8px 10px;
+              border: 1px solid $lightGreen;
+              background-color: $lightGreen;
+              font-size: 16px;
+              font-weight: 700;
+              border-radius: 10px;
+
+              @include smallScreen {
+                padding: 5px 7px;
+                font-size: 13px;
+              }
+
+              &:hover {
+                background-color: white;
+                color: $lightGreen;
+              }
+            }
+            .active {
+              color: $lightGreen;
+              padding: 8px 10px;
+              background-color: white;
+              border: 1px solid $lightGreen;
+              font-size: 16px;
+              font-weight: 700;
+              border-radius: 10px;
+            }
           }
           .user {
             display: flex;
@@ -131,6 +207,13 @@ $lightGreen: rgb(9, 228, 228);
             span {
               cursor: pointer;
               font-weight: 700;
+
+              @include smallScreen {
+                display: none;
+              }
+              @include mobile {
+                display: none;
+              }
             }
           }
 
@@ -147,6 +230,10 @@ $lightGreen: rgb(9, 228, 228);
             color: white;
             letter-spacing: 1.5px;
             text-align: center;
+
+            @include mobile {
+              display: none;
+            }
 
             &:hover {
               color: teal;
@@ -200,9 +287,19 @@ $lightGreen: rgb(9, 228, 228);
           gap: 100px;
           align-items: center;
 
+          @include mobile {
+            flex-direction: column;
+            gap: 50px;
+            margin-bottom: -70px;
+          }
+
           &:nth-child(2n + 1) {
             display: flex;
             flex-direction: row-reverse;
+
+            @include mobile {
+              flex-direction: column;
+            }
           }
 
           .img {
@@ -268,6 +365,13 @@ $lightGreen: rgb(9, 228, 228);
       display: flex;
       gap: 50px;
 
+      @include mobile {
+        flex-direction: column;
+      }
+      @include smallScreen {
+        flex-direction: column;
+      }
+
       .content {
         flex: 5;
         display: flex;
@@ -278,6 +382,11 @@ $lightGreen: rgb(9, 228, 228);
           width: 100%;
           height: 300px;
           object-fit: cover;
+
+          @include mobile {
+            padding: 0;
+            margin: 0;
+          }
         }
 
         .user {
@@ -311,6 +420,10 @@ $lightGreen: rgb(9, 228, 228);
         h1 {
           font-size: 30px;
           color: #333;
+
+          @include mobile {
+            font-size: 25px;
+          }
         }
         p {
           text-align: justify;
@@ -368,6 +481,10 @@ $lightGreen: rgb(9, 228, 228);
       margin-top: 20px;
       display: flex;
       gap: 20px;
+
+      @include mobile {
+        flex-direction: column;
+      }
 
       .content {
         flex: 5;
@@ -452,12 +569,21 @@ $lightGreen: rgb(9, 228, 228);
       display: flex;
       gap: 20px;
 
+      @include mobile {
+        flex-direction: column;
+        gap: 40px;
+      }
+
       .left {
         flex: 1;
         .userInfo {
           display: flex;
           flex-direction: column;
           gap: 20px;
+
+          @include mobile {
+            align-items: center;
+          }
 
           .userImage {
             img {
@@ -583,11 +709,21 @@ $lightGreen: rgb(9, 228, 228);
           flex-wrap: wrap;
           gap: 25px;
 
+          @include smallScreen {
+            gap: 20px;
+          }
+
           .post {
             height: 280px;
             width: 210px;
             border: 1px solid $lightGreen;
             border-radius: 10px;
+            @include smallScreen {
+              width: 200px;
+            }
+            @include mobile {
+              width: 100%;
+            }
 
             .postContainer {
               padding: 8px 10px;
@@ -630,6 +766,10 @@ $lightGreen: rgb(9, 228, 228);
         display: flex;
         align-items: center;
         gap: 150px;
+
+        @include mobile {
+          gap: 80px;
+        }
 
         .item {
           display: flex;

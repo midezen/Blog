@@ -92,29 +92,9 @@ const Comments = ({ item }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   getLikes().then(() => {
-  //     likes.find((obj) => {
-  //       if (obj.uid === currentUser.id) {
-  //         setLikeBool(true);
-  //       }
-  //     });
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   // setLikeBool(false);
-  //   getLikes();
-  //   likes.find((obj) => {
-  //     setLikeBool(false);
-  //     obj.uid === currentUser.id && setLikeBool(true);
-  //   });
-  // }, []);
-
   const handleLike = async () => {
     const check = likes.find((obj) => obj.uid === currentUser.id);
     if (check) {
-      // alert("You already Liked this post");
       setLikeBool(true);
     } else {
       try {
