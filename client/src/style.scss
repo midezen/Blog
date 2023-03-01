@@ -703,6 +703,16 @@ $lightGreen: rgb(9, 228, 228);
 
       .right {
         flex: 9;
+        position: relative;
+
+        h2 {
+          position: absolute;
+          top: 50%;
+          right: 50%;
+          left: 50%;
+          bottom: 0;
+          width: 80%;
+        }
 
         .posts {
           display: flex;

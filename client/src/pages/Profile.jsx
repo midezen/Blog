@@ -43,6 +43,7 @@ const Profile = () => {
   }, [id]);
 
   useEffect(() => {
+    setEdit(false);
     fetchUserData();
   }, [id]);
 
@@ -169,35 +170,41 @@ const Profile = () => {
 
           {edit === true && (
             <div className="update">
+              <strong>First Name:</strong>
               <input
                 type="text"
                 name="firstName"
                 value={updatedUser.firstName}
                 onChange={handleChange}
               />
+              <strong>Last Name:</strong>
               <input
                 type="text"
                 name="lastName"
                 value={updatedUser.lastName}
                 onChange={handleChange}
               />
+              <strong>User Name:</strong>
               <input
                 type="text"
                 name="username"
                 value={updatedUser.username}
                 onChange={handleChange}
               />
+              <strong>About:</strong>
               <textarea
                 value={updatedUser.about}
                 name="about"
                 onChange={handleChange}
               />
+              <strong>Location:</strong>
               <input
                 type="text"
                 value={updatedUser.userLocation}
                 name="userLocation"
                 onChange={handleChange}
               />
+              <strong>Email:</strong>
               <input
                 type="text"
                 value={updatedUser.email}
@@ -214,24 +221,28 @@ const Profile = () => {
       </div>
 
       <div className="right">
-        <div className="posts">
-          {posts.map((post) => {
-            return (
-              <div className="post" key={post.id}>
-                <div className="postContainer">
-                  <img
-                    src={process.env.PUBLIC_URL + `/upload/${post.postImg}`}
-                    alt=""
-                  />
-                  <h5>{post.title}</h5>
-                  <Link to={`/post/${post.id}`} className="link">
-                    <button>Read</button>
-                  </Link>
+        {posts.length === 0 ? (
+          <h2>Your Post Will be displayed Here</h2>
+        ) : (
+          <div className="posts">
+            {posts.map((post) => {
+              return (
+                <div className="post" key={post.id}>
+                  <div className="postContainer">
+                    <img
+                      src={process.env.PUBLIC_URL + `/upload/${post.postImg}`}
+                      alt=""
+                    />
+                    <h5>{post.title}</h5>
+                    <Link to={`/post/${post.id}`} className="link">
+                      <button>Read</button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

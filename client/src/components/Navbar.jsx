@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
+import avatar from "../img/avatar.jpg";
 
 const Navbar = () => {
   const { currentUser, logout } = useContext(UserContext);
@@ -205,10 +206,14 @@ const Navbar = () => {
               <div className="user">
                 <img
                   src={
-                    process.env.PUBLIC_URL + `/profilePic/${currentUser.img}`
+                    currentUser.img === null
+                      ? avatar
+                      : process.env.PUBLIC_URL +
+                        `/profilePic/${currentUser.img}`
                   }
                   alt=""
                 />
+
                 <span>{currentUser?.fName}</span>
               </div>
             </Link>
