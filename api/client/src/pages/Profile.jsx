@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
 import avatar from "../img/avatar.jpg";
+import { axiosInstance } from "../config";
 
 const Profile = () => {
   const { currentUser, userData } = useContext(UserContext);
@@ -28,7 +28,7 @@ const Profile = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`/posts/?id=${id}`);
+      const res = await axiosInstance.get(`/posts/?id=${id}`);
       setPosts(res.data);
     } catch (err) {
       console.log(err);
@@ -66,9 +66,9 @@ const Profile = () => {
       const formData = new FormData();
       formData.append("profilePic", file);
       try {
-        const res = await axios.post("/profileUpload", formData);
+        const res = await axiosInstance.post("/profileUpload", formData);
         e.preventDefault();
-        await axios.put(`/users/img/${id}`, { img: res.data });
+        await axiosInstance.put(`/users/img/${id}`, { img: res.data });
         fetchUserData();
       } catch (err) {
         console.log(err);
@@ -80,7 +80,7 @@ const Profile = () => {
     e.preventDefault();
     // const imgUrl = await upload();
     try {
-      await axios.put(`/users/${id}`, {
+      await axiosInstance.put(`/users/${id}`, {
         fName: updatedUser.firstName,
         lName: updatedUser.lastName,
         username: updatedUser.username,

@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../allContexts/userContext";
 import DOMPurify from "dompurify";
+import { axiosInstance } from "../config";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -14,8 +14,8 @@ const Home = () => {
     try {
       const res =
         location.search === ""
-          ? await axios.get("/posts/")
-          : await axios.get(`/posts/${location.search}`);
+          ? await axiosInstance.get("/posts/")
+          : await axiosInstance.get(`/posts/${location.search}`);
 
       setPosts(res.data);
     } catch (err) {

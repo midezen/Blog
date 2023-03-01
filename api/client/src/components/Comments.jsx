@@ -1,4 +1,3 @@
-import axios from "axios";
 import moment from "moment";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../allContexts/userContext";
@@ -7,6 +6,7 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import editIcon from "../img/edit.png";
 import DeleteIcon from "../img/delete.png";
+import { axiosInstance } from "../config";
 
 const Comments = ({ item }) => {
   const { currentUser } = useContext(UserContext);
@@ -19,7 +19,7 @@ const Comments = ({ item }) => {
 
   const getComments = async () => {
     try {
-      const res = await axios.get(`/comments/?_id=${item.id}`);
+      const res = await axiosInstance.get(`/comments/?_id=${item.id}`);
       setComments(res.data);
     } catch (err) {
       console.log(err);
@@ -34,13 +34,13 @@ const Comments = ({ item }) => {
     e.preventDefault();
     try {
       !commentBool
-        ? await axios.post("/comments/create", {
+        ? await axiosInstance.post("/comments/create", {
             desc: commentInput ? commentInput : null,
             uid: currentUser.id,
             postid: item.id,
             date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
           })
-        : await axios.put(`/comments/${commentId}`, {
+        : await axiosInstance.put(`/comments/${commentId}`, {
             desc: commentInput ? commentInput : null,
           });
     } catch (err) {
@@ -53,7 +53,7 @@ const Comments = ({ item }) => {
 
   const deleteComment = async (prop) => {
     try {
-      await axios.delete(`/comments/${prop}`);
+      await axiosInstance.delete(`/comments/${prop}`);
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +62,7 @@ const Comments = ({ item }) => {
 
   const getLikes = async () => {
     try {
-      const res = await axios.get(`/likes/?id=${item.id}`);
+      const res = await axiosInstance.get(`/likes/?id=${item.id}`);
       setLikes(res.data);
     } catch (err) {
       console.log(err);
@@ -98,7 +98,7 @@ const Comments = ({ item }) => {
       setLikeBool(true);
     } else {
       try {
-        await axios.post("/likes/create", {
+        await axiosInstance.post("/likes/create", {
           postid: item.id,
           uid: currentUser.id,
         });
@@ -116,7 +116,7 @@ const Comments = ({ item }) => {
     if (thisObj) {
       const thisId = thisObj.id;
       try {
-        await axios.delete(`/likes/${thisId}`);
+        await axiosInstance.delete(`/likes/${thisId}`);
       } catch (err) {
         console.log(err);
       }

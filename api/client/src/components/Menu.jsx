@@ -1,12 +1,12 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../config";
 const Menu = ({ cat }) => {
   const [posts, setPosts] = useState([]);
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`/posts/?cat=${cat}`);
+      const res = await axiosInstance.get(`/posts/?cat=${cat}`);
       setPosts(res.data);
     } catch (err) {
       console.log(err);

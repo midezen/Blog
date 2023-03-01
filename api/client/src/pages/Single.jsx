@@ -2,12 +2,12 @@ import Edit from "../img/edit.png";
 import Delete from "../img/delete.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Menu from "../components/Menu";
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { UserContext } from "../allContexts/userContext";
 import DOMPurify from "dompurify";
 import Comments from "../components/Comments";
+import { axiosInstance } from "../config";
 
 const Single = () => {
   const { currentUser } = useContext(UserContext);
@@ -20,7 +20,7 @@ const Single = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`/posts/${id}`);
+      const res = await axiosInstance.get(`/posts/${id}`);
       setPost(res.data);
     } catch (err) {
       console.log(err);
@@ -33,7 +33,7 @@ const Single = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${id}`);
+      await axiosInstance.delete(`/posts/${id}`);
       navigate("/");
     } catch (err) {
       console.log(err);

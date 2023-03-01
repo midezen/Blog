@@ -19,7 +19,7 @@ app.use(Cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../client/public/upload");
+    cb(null, "./client/public/upload");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -28,7 +28,7 @@ const storage = multer.diskStorage({
 
 const uploadStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "../client/public/profilePic");
+    cb(null, "./client/public/profilePic");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -59,6 +59,12 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
 
-app.listen(8800, () => {
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
+
+app.listen(process.env.PORT || 8800, () => {
   console.log("server is running");
 });
