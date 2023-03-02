@@ -60,10 +60,10 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
 
-app.use(express.static(path.join(__dirname, "/client/build")));
+app.use(express.static(path.join(process.cwd(), "/client/build")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+  res.sendFile(path.join(process.cwd(), "/client/build", "index.html"));
 });
 
 app.listen(process.env.PORT || 8800, () => {
