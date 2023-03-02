@@ -54,6 +54,7 @@ $lightGreen: rgb(9, 228, 228);
 
         @include mobile {
           padding: 30px;
+          gap: 40px;
         }
 
         input {
@@ -290,7 +291,7 @@ $lightGreen: rgb(9, 228, 228);
           @include mobile {
             flex-direction: column;
             gap: 50px;
-            margin-bottom: -70px;
+            margin-bottom: 0px;
           }
 
           &:nth-child(2n + 1) {
@@ -367,6 +368,7 @@ $lightGreen: rgb(9, 228, 228);
 
       @include mobile {
         flex-direction: column;
+        gap: 40px;
       }
       @include smallScreen {
         flex-direction: column;
@@ -377,6 +379,10 @@ $lightGreen: rgb(9, 228, 228);
         display: flex;
         flex-direction: column;
         gap: 30px;
+
+        @include mobile {
+          gap: 50px;
+        }
 
         img {
           width: 100%;
@@ -437,6 +443,10 @@ $lightGreen: rgb(9, 228, 228);
         flex-direction: column;
         gap: 25px;
 
+        @include mobile {
+          gap: 40px;
+        }
+
         h1 {
           font-size: 20px;
           color: #555;
@@ -484,6 +494,7 @@ $lightGreen: rgb(9, 228, 228);
 
       @include mobile {
         flex-direction: column;
+        gap: 30px;
       }
 
       .content {
@@ -571,7 +582,7 @@ $lightGreen: rgb(9, 228, 228);
 
       @include mobile {
         flex-direction: column;
-        gap: 40px;
+        gap: 70px;
       }
 
       .left {
@@ -583,6 +594,7 @@ $lightGreen: rgb(9, 228, 228);
 
           @include mobile {
             align-items: center;
+            gap: 40px;
           }
 
           .userImage {
@@ -723,6 +735,10 @@ $lightGreen: rgb(9, 228, 228);
             gap: 20px;
           }
 
+          @include mobile {
+            gap: 20px;
+          }
+
           .post {
             height: 280px;
             width: 210px;
@@ -733,6 +749,7 @@ $lightGreen: rgb(9, 228, 228);
             }
             @include mobile {
               width: 100%;
+              margin-bottom: 10px;
             }
 
             .postContainer {
@@ -771,6 +788,10 @@ $lightGreen: rgb(9, 228, 228);
       display: flex;
       flex-direction: column;
       gap: 30px;
+
+      @include mobile {
+        gap: 50px;
+      }
 
       .likeComment {
         display: flex;
