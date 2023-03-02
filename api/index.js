@@ -60,10 +60,14 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
 
-app.use(express.static(path.join(process.cwd(), "/client/build")));
+// Serve static assets from the "client/build" folder
+app.use(express.static(path.join(import.meta.url, "..", "client", "build")));
 
+// For any other requests, send the index.html file
 app.get("*", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "/client/build", "index.html"));
+  res.sendFile(
+    path.join(import.meta.url, "..", "client", "build", "index.html")
+  );
 });
 
 app.listen(process.env.PORT || 8800, () => {
