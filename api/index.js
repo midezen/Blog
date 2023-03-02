@@ -8,6 +8,7 @@ import multer from "multer";
 import userRoute from "./routes/users.js";
 import commentRoute from "./routes/comments.js";
 import likeRoute from "./routes/likes.js";
+import path from "path";
 
 dotenv.config();
 
@@ -59,7 +60,7 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
 
-app.use(express.static(path.join(__dirname, "/client/build", "index.html")));
+app.use(express.static(path.join(__dirname, "/client/build")));
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/client/build", "index.html"));
