@@ -78,5 +78,5 @@ app.get("*", (req, res) => {
 });
 
 app.listen(process.env.PORT || 8800, () => {
-  console.log("server is running");
+  console.log("server is runnin");
 });
