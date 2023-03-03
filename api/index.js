@@ -8,7 +8,6 @@ import multer from "multer";
 import userRoute from "./routes/users.js";
 import commentRoute from "./routes/comments.js";
 import likeRoute from "./routes/likes.js";
-import path from "path";
 
 dotenv.config();
 
@@ -20,7 +19,7 @@ app.use(Cors());
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./client/public/upload");
+    cb(null, "../client/public/upload");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -29,7 +28,7 @@ const storage = multer.diskStorage({
 
 const uploadStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./client/public/profilePic");
+    cb(null, "../client/public/profilePic");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + file.originalname);
@@ -60,23 +59,6 @@ app.use("/api/posts", postRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/likes", likeRoute);
 
-app.use(
-  express.static(
-    path.join(new URL(".", import.meta.url).pathname, "client/build")
-  )
-);
-
-// For any other requests, send the index.html file
-app.get("*", (req, res) => {
-  res.sendFile(
-    path.join(
-      new URL(".", import.meta.url).pathname,
-      "client/build",
-      "index.html"
-    )
-  );
-});
-
 app.listen(process.env.PORT || 8800, () => {
-  console.log("server is runnin");
+  console.log("server is running");
 });
