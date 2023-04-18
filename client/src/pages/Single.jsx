@@ -7,7 +7,7 @@ import moment from "moment";
 import { UserContext } from "../allContexts/userContext";
 import DOMPurify from "dompurify";
 import Comments from "../components/Comments";
-import { axiosInstance } from "../config";
+import axios from "axios";
 
 const Single = () => {
   const { currentUser } = useContext(UserContext);
@@ -20,7 +20,7 @@ const Single = () => {
 
   const fetchData = async () => {
     try {
-      const res = await axiosInstance.get(`/posts/${id}`);
+      const res = await axios.get(`/posts/${id}`);
       setPost(res.data);
     } catch (err) {
       console.log(err);
@@ -33,7 +33,7 @@ const Single = () => {
 
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/posts/${id}`);
+      await axios.delete(`/posts/${id}`);
       navigate("/");
     } catch (err) {
       console.log(err);

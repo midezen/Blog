@@ -54,7 +54,6 @@ const Navbar = () => {
                       display: "flex",
                       flexDirection: "column",
                       fontSize: "30px",
-                      // gap: "30px",
                       padding: "20px",
                       textAlign: "justify",
                     }}

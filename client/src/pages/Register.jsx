@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { axiosInstance } from "../config";
+import axios from "axios";
 
 const Register = () => {
   const [error, setError] = useState(null);
@@ -21,7 +21,7 @@ const Register = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.post("/auth/register", user);
+      await axios.post("/auth/register", user);
       navigate("/login");
     } catch (err) {
       setError(JSON.stringify(err.response.data));
